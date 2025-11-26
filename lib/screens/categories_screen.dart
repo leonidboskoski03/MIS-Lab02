@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../models/category.dart';
 import 'category_meals_screen.dart';
-import 'meal_detail_screen.dart'; // needed for navigation to detail
+import 'meal_detail_screen.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -48,7 +48,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   Future<void> _openRandomMeal() async {
-    // show a short loading SnackBar
     final sb = SnackBar(
       content: Row(
         children: const [

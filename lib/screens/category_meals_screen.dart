@@ -46,17 +46,12 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
       return;
     }
 
-    // The filter.php endpoint doesn't support partial text search.
-    // Use search.php to get global results and then filter by category locally.
     final results = await ApiService.searchMeals(q);
-    // Keep only those that belong to this category (best-effort: compare names or fetch details)
-    // The API search response does not include category in the summary, so we'll filter by name match
-    // and also include any matching items that exist in _all.
+
     final byName = results.where((r) => r.name.toLowerCase().contains(q.toLowerCase())).toList();
-    // Also include any local matches
+
     final localMatches = _all.where((m) => m.name.toLowerCase().contains(q.toLowerCase())).toList();
 
-    // Merge unique entries preferring local order
     final Map<String, MealSummary> merged = {};
     for (final m in localMatches) merged[m.id] = m;
     for (final m in byName) merged[m.id] = m;
