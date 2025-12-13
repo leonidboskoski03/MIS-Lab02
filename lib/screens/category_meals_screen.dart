@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/meal_summary.dart';
 import '../services/api_service.dart';
 import '../widgets/meal_grid_item.dart';
+import '../services/favorites_service.dart';
 import 'meal_detail_screen.dart';
 
 class CategoryMealsScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
   List<MealSummary> _filtered = [];
   bool _loading = true;
   final TextEditingController _searchController = TextEditingController();
+  final FavoritesService _favoritesService = FavoritesService();
 
   @override
   void initState() {
@@ -47,9 +49,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
     }
 
     final results = await ApiService.searchMeals(q);
-
     final byName = results.where((r) => r.name.toLowerCase().contains(q.toLowerCase())).toList();
-
     final localMatches = _all.where((m) => m.name.toLowerCase().contains(q.toLowerCase())).toList();
 
     final Map<String, MealSummary> merged = {};
@@ -102,6 +102,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
                       ),
                     );
                   },
+                  favoriteService: _favoritesService,
                 );
               },
             ),

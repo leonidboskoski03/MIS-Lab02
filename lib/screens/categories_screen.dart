@@ -3,6 +3,8 @@ import '../services/api_service.dart';
 import '../models/category.dart';
 import 'category_meals_screen.dart';
 import 'meal_detail_screen.dart';
+import 'favorites_screen.dart';
+import '../services/favorites_service.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -14,6 +16,7 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   List<MealCategory> categories = [];
   List<MealCategory> filtered = [];
+  final FavoritesService _favoritesService = FavoritesService();
   bool loading = true;
 
   @override
@@ -89,6 +92,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             tooltip: 'Random meal',
             icon: const Icon(Icons.shuffle),
             onPressed: _openRandomMeal,
+          ),
+          IconButton(
+            tooltip: 'Favorites',
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => FavoritesScreen(favoriteService: _favoritesService),
+                ),
+              );
+            },
           ),
         ],
       ),
